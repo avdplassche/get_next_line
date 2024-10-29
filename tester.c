@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utilis.c                             :+:      :+:    :+:   */
+/*   tester.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 15:53:46 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/10/29 13:16:59 by alvan-de         ###   LAUSANNE.ch       */
+/*   Created: 2024/10/29 17:03:02 by alvan-de          #+#    #+#             */
+/*   Updated: 2024/10/29 17:03:35 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strchr_gnl(const char *s, char c)
+int main(void)
 {
-	int		i;
+	int		fd;
+	char	*s;
+	char	*pathname;
 
-	i = 0;
-	if (c == 0)
-	{
-		while (s[i])
-			i++;
-		return (i);
-	}
-	else
-	{
-		while (s[i])
-		{
-			if (s[i] == c)
-				return (i);
-			i++;
-		}
-	}
-	return (-1);
+	pathname = "aaaa.txt";
+	fd = open(pathname, O_RDONLY);
+	read(fd, s, 10);
+	printf("%s", s);
+	return (0);
 }
