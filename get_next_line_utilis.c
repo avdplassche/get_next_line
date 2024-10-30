@@ -6,30 +6,30 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:53:46 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/10/30 14:35:38 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/10/30 20:04:45 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strchr(const char *s, char c)
 {
 	int		i;
-	char	ch;
 
-	ch = (char)c;
 	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (ch == '\0')
-		return (&(*(char *)&s[i]));
+	if (c == 0)
+	{
+		while (s[i])
+			i++;
+		return ((char *)&s[i]);
+	}
 	else
 	{
-		while (i >= 0)
+		while (s[i])
 		{
-			if (s[i] == ch)
-				return (&(*(char *)&s[i]));
-			i--;
+			if (s[i] == c)
+				return ((char *)&s[i]);
+			i++;
 		}
 	}
 	return (NULL);

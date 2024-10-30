@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:54:53 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/10/30 15:03:50 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/10/30 20:04:14 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*ft_strrchr(const char *s, char c);
+char	*ft_strchr(const char *s, char c);
 int		ft_strlen(char *s);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
