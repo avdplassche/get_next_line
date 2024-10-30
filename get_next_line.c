@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:49:41 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/10/29 17:09:09 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/10/30 15:06:02 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,24 @@
 
 char	*get_next_line(int fd)
 {
-	char			buffer[BUFFER_SIZE + 1];
-	int				count;
-	static char		*tab;
-
-	while (ft_strchr_gnl(tab, '\n') < 0)
+	char		buffer[BUFFER_SIZE + 1];
+	char		*line;
+	char		*temp;
+	int			count;
+	
+	if (!ft_strchr_gnl(temp, '\n'))
+		line = ft_strdup(buffer);
+	count = read(fd, buffer, BUFFER_SIZE);
+	while (!ft_strchr_gnl(temp, '\n'))
 	{
-		count = read(fd, buffer, BUFFER_SIZE);
+		temp = line;
+		if (!line)
+			line = ft_strdup(buffer);
+		else
+		{
+			line = ft_strjoin(temp, buffer);
+			free (temp);
+		}
 	}
-	return (count);
+	return (line);
 }
