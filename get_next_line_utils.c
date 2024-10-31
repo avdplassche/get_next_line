@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utilis.c                             :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 15:53:46 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/10/30 20:04:45 by alvan-de         ###   LAUSANNE.ch       */
+/*   Created: 2024/10/31 10:53:13 by alvan-de          #+#    #+#             */
+/*   Updated: 2024/10/31 14:14:40 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ char	*ft_strchr(const char *s, char c)
 	return (NULL);
 }
 
-int	ft_strlen(char *s)
+unsigned int	ft_strlen(char *s)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (s[i])
@@ -82,6 +82,32 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		dest[i] = s1[i];
 	while (s2[++j])
 		dest[i++] = s2[j];
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*dest;
+	size_t	i;
+
+	i = -1;
+	if (start >= ft_strlen((char *)s))
+	{
+		dest = ft_strdup("");
+		return (dest);
+	}
+	if (len > ft_strlen((char *)s) - start)
+		dest = malloc(sizeof(char) * (ft_strlen((char *)s) - start + 1));
+	else
+		dest = malloc(sizeof(char) * (len + 1));
+	if (!dest)
+		return (NULL);
+	while (++i < len && start < ft_strlen((char *)s))
+	{
+		dest[i] = s[start];
+		start++;
+	}
 	dest[i] = '\0';
 	return (dest);
 }
