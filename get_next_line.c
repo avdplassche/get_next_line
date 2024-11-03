@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:49:41 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/10/31 16:30:10 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/03 17:56:23 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,40 @@
 
 char	*get_next_line(int fd)
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char		buffer[BUFFER_SIZE + 1];
 	static char	*line;
-	char	*temp;
-	int		i;
-	int		count;
+	char		*temp;
+	int			i;
+	int			count;
 
 	if (fd < 0)
-		return (NULL);
-	/*if (!read(fd, buffer, BUFFER_SIZE))*/
-	/*	return (NULL);*/
-	count = 0;
+		return ("NULL : fd");
+	count = read(fd, buffer, BUFFER_SIZE);
 	i = 0;
+	if (!ft_strchr(buffer, '\n'))
+		temp = ft_strdup(buffer);
+	else 
+	{
+		while (buffer[i] != '\n' && buffer[i] != '\0')
+			i++;
+	// static = substr buffer, i, until != \0
+		return (ft_substr(buffer, 0, i));
+	}
 	while (!ft_strchr(buffer, '\n'))
 	{
 		count += read(fd, buffer, BUFFER_SIZE);
-		if (!ft_strchr(buffer, '\n'))
-			line = ft_strjoin(line, buffer);
-		else if (ft_strchr(buffer, '\n') || ft_strchr(buffer, '\0'))
-			break ;
+		if(!ft_strchr(buffer, '\n'))
+		{
+			line = ft_strjoin(temp, buffer);
+			free (temp);
+			temp = ft_strdup(line);
+			free (line);
+		}
 	}
 //	while (buffer[i] != '\n' && buffer[i] != '\0')
 //		i++;
-//	temp = ft_substr(line, count - BUFFER_SIZE, i);
-//	line = ft_strjoin(line, temp);
-	//free(temp);
-	return (line);
+//	line = ft_strjoin(temp, ft_substr(buffer, 0, i));
+	//free (temp);
+	//line[count] = '\0';
+	return (temp);
 }
