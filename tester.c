@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:03:02 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/04 14:19:53 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/04 18:29:27 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(void)
 	while (i < 3)
 	{
 		line = get_next_line(fd);
-		printf("%s", line);
+		printf("%s\n", line);
 		free(line);
 		i++;
 	}
