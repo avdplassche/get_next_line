@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:53:13 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/03 17:47:34 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/04 12:11:03 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	dest = malloc(sizeof(char) * (i + j + 1));
 	if (!dest)
-		return ("NULL : Malloc strjoin");
+		return (NULL);
 	j = -1;
 	i = -1;
 	while (s1[++i])
