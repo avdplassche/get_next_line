@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:54:53 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/04 19:01:33 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/05 13:33:57 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 43
+#  define BUFFER_SIZE 1
 # endif
 
 #endif

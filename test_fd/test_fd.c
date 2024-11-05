@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester.c                                           :+:      :+:    :+:   */
+/*   test_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 17:03:02 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/05 14:01:36 by alvan-de         ###   LAUSANNE.ch       */
+/*   Created: 2024/11/05 11:00:00 by alvan-de          #+#    #+#             */
+/*   Updated: 2024/11/05 11:03:16 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-int	main(void)
+int	main (void)
 {
 	int		fd;
-	int		i;
-	char	*line;
+	char	*buffer;
 
-	i = 0;
-	fd = open("41_with_nl", O_RDONLY, 0);
-	while (i < 2)
-	{
-		line = get_next_line(fd);
-		printf("%s\n", line);
-		free(line);
-		i++;
-	}
+	fd = open ("a.txt", O_RDONLY, 0);
+	read(fd, buffer, 10);
+	printf("%s", buffer);
 	close(fd);
 	return (0);
 }
