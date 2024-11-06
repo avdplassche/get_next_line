@@ -6,73 +6,67 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:49:41 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/05 23:06:46 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/06 18:37:42 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
-char	*fill_line(int fd, char *buffer, char *remainder)
+char	*fill_line(int fd, char *remainder)
 {
-	char	*line;
+	char	*str;
 	char	*temp;
-	int		i;
+	char	buffer[BUFFER_SIZE + 1];
 
-	line = ft_strdup(remainder);
-	while (!ft_strchr(buffer, '\n'))
+	str = ft_strdup(remainder);
+	while (!ft_strchr(buffer, '\n') && !ft_strchr(str, '\n'))
 	{
 		read(fd, buffer, BUFFER_SIZE);
-		if (!ft_strchr(buffer, '\n'))
-		{
-			if (!line)
-				line = ft_strdup(buffer);
-			else
-			{
-				temp = ft_strjoin(line, buffer);
-				free(line);
-				line = ft_strdup(temp);
-				free(temp);
-			}
-		}
+		if (ft_strchr(buffer, '\0') && BUFFER_SIZE != ft_strlen(buffer))
+			break ;
+		buffer[BUFFER_SIZE] = '\0';
+		if (!str)
+			str = ft_strdup(buffer);
 		else
 		{
-			while (buffer[i] != '\n' && buffer[i] != '\0')
-				i++;
-			temp = ft_strjoin(line, ft_substr(buffer, 0, i - 1));
-			free(line);
-			line = ft_strdup (temp);
-			if (buffer[i] != '\0')
-				remainder = ft_substr(buffer, i + 1, ft_strlen(buffer));
+			temp = ft_strjoin(str, buffer);
+			free(str);
+			str = ft_strdup(temp);
+			free(temp);
 		}
 	}
-	return (line);
+	return (str);
 }
-/*
-char	*fill_remainder(char *buffer, char *remainder, char *joint)
-{
-	int		i;
-	char	*line;
-
-	i = 0;
-	while (buffer[i] != '\n')
-		i++;
-	line = ft_strjoin(joint, ft_substr(buffer, 0, i));
-	remainder = ft_substr(buffer, i, ft_strlen(buffer));
-	return (line);
-}
-*/
 
 char	*get_next_line(int fd)
 {
-	char		buffer[BUFFER_SIZE + 1];
 	char		*line;
+	char		*temp;
+	int			i;
 	static char	*remainder;
 
+	i = 0;
 	if (!remainder)
-		remainder = ft_strdup("\0");
-	if (fd < 0)
+		remainder = "";
+	if (fd <= 0)
 		return (NULL);
-	buffer[0] = '\0';    //* */mettre peut etre en commentaire
-	line = fill_line(fd, buffer, remainder);
+	temp = fill_line(fd, remainder);
+//	printf("Temp : |%s|\n", temp);
+	while (temp[i] != '\n' && temp[i] != '\0')
+		i++;
+	line = ft_substr(temp, 0, i);
+	if (temp[i] == '\n')
+	{
+		if (temp[i + 1] == '\0')
+			remainder = "";
+		else
+			remainder = ft_substr(temp, i + 1, ft_strlen(temp) - i);
+	}
+		//	if (temp[i] == '\0')
+//		remainder = NULL;
+//		return (NULL);
+	free(temp);
+	printf("Rem : |%s|\n", remainder);
 	return (line);
 }
