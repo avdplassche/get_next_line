@@ -5,68 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 15:49:41 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/06 18:37:42 by alvan-de         ###   LAUSANNE.ch       */
+/*   Created: 2024/11/07 11:54:31 by alvan-de          #+#    #+#             */
+/*   Updated: 2024/11/07 16:21:17 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// a faire sur sketche
 #include "get_next_line.h"
-#include <stdio.h>
 
-char	*fill_line(int fd, char *remainder)
+char	*set_line(int fd, char *buffer, char *left_c)
 {
-	char	*str;
 	char	*temp;
-	char	buffer[BUFFER_SIZE + 1];
+	int		count;
 
-	str = ft_strdup(remainder);
-	while (!ft_strchr(buffer, '\n') && !ft_strchr(str, '\n'))
+	count = 1;
+	while (count > 0)
 	{
-		read(fd, buffer, BUFFER_SIZE);
-		if (ft_strchr(buffer, '\0') && BUFFER_SIZE != ft_strlen(buffer))
+		count = read(fd, buffer, BUFFER_SIZE);
+		if (count == -1)
+			return (NULL);
+		if (count == 0)
 			break ;
-		buffer[BUFFER_SIZE] = '\0';
-		if (!str)
-			str = ft_strdup(buffer);
-		else
-		{
-			temp = ft_strjoin(str, buffer);
-			free(str);
-			str = ft_strdup(temp);
-			free(temp);
-		}
+		buffer[count] = '\0';
+		if (!left_c)
+			left_c = "";
+		temp = ft_strjoin(left_c, buffer);
+		left_c = ft_strdup(temp);
+		free(temp);
+		if (ft_strchr(left_c, '\n'))
+			break ;
 	}
-	return (str);
+	return (left_c);
+}
+
+char	*set_leftover(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\n')
+		i++;
+	return (ft_substr(line, i + 1, ft_strlen(line) - (i + 1)));
 }
 
 char	*get_next_line(int fd)
 {
+	static char	*left_c;
+	char		*buffer;
 	char		*line;
-	char		*temp;
 	int			i;
-	static char	*remainder;
 
 	i = 0;
-	if (!remainder)
-		remainder = "";
-	if (fd <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	temp = fill_line(fd, remainder);
-//	printf("Temp : |%s|\n", temp);
-	while (temp[i] != '\n' && temp[i] != '\0')
+	buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	line = set_line(fd, buffer, left_c);
+	left_c = set_leftover(line);
+	free(buffer);
+	while (left_c[i] != '\n')
 		i++;
-	line = ft_substr(temp, 0, i);
-	if (temp[i] == '\n')
-	{
-		if (temp[i + 1] == '\0')
-			remainder = "";
-		else
-			remainder = ft_substr(temp, i + 1, ft_strlen(temp) - i);
-	}
-		//	if (temp[i] == '\0')
-//		remainder = NULL;
-//		return (NULL);
-	free(temp);
-	printf("Rem : |%s|\n", remainder);
-	return (line);
+	return (ft_substr(line, 0, i - 1));
 }
