@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:54:31 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/07 16:21:17 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/07 17:50:56 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*set_leftover(char *line)
 	i = 0;
 	while (line[i] != '\n')
 		i++;
-	return (ft_substr(line, i + 1, ft_strlen(line) - (i + 1)));
+	return (ft_substr(line, i + 1, ft_strlen(line) - i));
 }
 
 char	*get_next_line(int fd)
