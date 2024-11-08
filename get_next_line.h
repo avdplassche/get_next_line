@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:54:53 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/08 13:45:40 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/08 16:43:41 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 # include <fcntl.h>
 
 char			*get_next_line(int fd);
-char			*ft_strchr(const char *s, char c);
+int				ft_strchr(const char *s, char c);
 unsigned int	ft_strlen(char *s);
 char			*ft_strdup(const char *s1);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 3
 # endif
 
 #endif

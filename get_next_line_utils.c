@@ -6,12 +6,13 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:53:13 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/05 14:11:09 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/08 16:43:53 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/*
 char	*ft_strchr(const char *s, char c)
 {
 	int		i;
@@ -33,6 +34,30 @@ char	*ft_strchr(const char *s, char c)
 		}
 	}
 	return (NULL);
+}
+*/
+
+int	ft_strchr(const char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	if (c == 0)
+	{
+		while (s[i])
+			i++;
+		return (1);
+	}
+	else
+	{
+		while (s[i])
+		{
+			if (s[i] == c)
+				return (1);
+			i++;
+		}
+	}
+	return (0);
 }
 
 unsigned int	ft_strlen(char *s)

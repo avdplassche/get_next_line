@@ -6,82 +6,93 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:54:31 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/08 13:44:54 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/08 16:50:20 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // a faire sur sketche
 #include "get_next_line.h"
 
-char	*set_line(int fd, char *buffer, char *left_c)
+static char	*hard_free(char *ptr)
 {
-	char	*temp;
-	int		count;
-
-	count = 1;
-	while (count > 0)
+	if (ptr)
 	{
-		count = read(fd, buffer, BUFFER_SIZE);
-		buffer[count] = '\0';
-	//	printf("Buffer : |%s|\nBuffer count : |%d|\n", buffer, count);
-		if (count == -1)
-		{
-			free(left_c);
-			return (NULL);
-		}
-		if (count == 0)
-			break ;
-		if (!left_c)
-			left_c = ft_strdup("");
-		temp = ft_strjoin(left_c, buffer);
-		left_c = ft_strdup(temp);
-		free(temp);
-		temp = NULL;
-		if (ft_strchr(left_c, '\n'))
-			break ;
+		free(ptr);
+		ptr = NULL;
 	}
-	return (left_c);
+	return (NULL);
 }
 
-char	*set_leftover(char *line)
+static int	tests(int fd, char *buffer, int b_size, char **leftover)
+{
+	buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer || BUFFER_SIZE <= 0 || fd < 0)
+	{
+		free (buffer);
+		return (0);
+	}
+	if (!leftover)
+	{
+		*leftover = ft_strdup("");
+		if (!leftover)
+		{
+			free(buffer);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+static char	*set_line(char *leftover)
 {
 	int	i;
 
 	i = 0;
-	if (!line)
-		return (NULL);
-	while (line[i] != '\n' && line[i] != '\0')
+	while (leftover[i] != '\n')
 		i++;
-	if (line[i] == '\0')
-		return (NULL);
-	return (ft_substr(line, i + 1, ft_strlen(line) - i));
+	return (ft_substr(leftover, 0, i));
+}
+
+static char	*set_left(char *leftover)
+{
+	int	i;
+
+	i = 0;
+	while (leftover[i] != '\n' && leftover[i] != '\0')
+		i++;
+	return (ft_substr(leftover, i + 1, ft_strlen(leftover) - i));
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*left_c;
+	static char	*leftover;
 	char		*buffer;
 	char		*line;
-	int			i;
+	char		*temp;
+	int			count;
 
-	i = 0;
-	buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (!tests(fd, buffer, BUFFER_SIZE, &leftover))
+		return (NULL);
+	while (1)
 	{
-		free(buffer);
-		free(left_c);
-		left_c = NULL;
-		buffer = NULL;
-		return (NULL);
+		if (leftover || ft_strchr(leftover, '\n') == 1)  //? pour premier
+			break ;
+		count = read(fd, buffer, BUFFER_SIZE);
+		if (count < 0 || (count == 0 && !leftover))
+			return (hard_free(buffer), hard_free(leftover), NULL);
+		if (count == 0)
+			break ;
+		buffer[count] = '\0';
+		temp = ft_strjoin(leftover, buffer);
+		if (!temp)
+			return (hard_free(buffer));
+		free(leftover);
+		leftover = ft_strdup(temp);
+		free(temp);
 	}
-	if (!buffer)
+	line = set_line(leftover);
+	leftover = set_left(leftover);
+	if (!line || !leftover)
 		return (NULL);
-	line = set_line(fd, buffer, left_c);
-	left_c = set_leftover(line);
-	free(buffer);
-	if (!line || !left_c)
-		return (NULL);
-	while (line[i] != '\n')
-		i++;
-	return (ft_substr(line, 0, i));
+	return (line);
 }
