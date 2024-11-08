@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:54:31 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/07 17:50:56 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/08 01:05:15 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_next_line(int fd)
 	line = set_line(fd, buffer, left_c);
 	left_c = set_leftover(line);
 	free(buffer);
-	while (left_c[i] != '\n')
+	while (line[i] != '\n')
 		i++;
-	return (ft_substr(line, 0, i - 1));
+	return (ft_substr(line, 0, i));
 }
