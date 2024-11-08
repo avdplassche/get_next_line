@@ -6,7 +6,7 @@
 /*   By: alvan-de <alvan-de@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:03:02 by alvan-de          #+#    #+#             */
-/*   Updated: 2024/11/08 01:05:39 by alvan-de         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/08 13:39:34 by alvan-de         ###   LAUSANNE.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	//fd = open("aaaa.txt", O_RDONLY, 0);
-	fd = open("41_with_nl", O_RDONLY, 0);
+	fd = open("aaaa.txt", O_RDONLY, 0);
+	//fd = open("41_with_nl", O_RDONLY, 0);
 	while (i < 5)
 	{
 		line = get_next_line(fd);
