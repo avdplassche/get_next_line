@@ -23,7 +23,7 @@ static char	*hard_free(char *ptr)
 	return (NULL);
 }
 
-static int	tests(int fd, char *buffer, int b_size, char **leftover)
+static int	tests(int fd, char *buffer, int b_size, char *leftover)
 {
 	buffer = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer || BUFFER_SIZE <= 0 || fd < 0)
@@ -33,7 +33,7 @@ static int	tests(int fd, char *buffer, int b_size, char **leftover)
 	}
 	if (!leftover)
 	{
-		*leftover = ft_strdup("");
+		leftover = ft_strdup("");
 		if (!leftover)
 		{
 			free(buffer);
@@ -71,11 +71,11 @@ char	*get_next_line(int fd)
 	char		*temp;
 	int			count;
 
-	if (!tests(fd, buffer, BUFFER_SIZE, &leftover))
+	if (!tests(fd, buffer, BUFFER_SIZE, leftover))
 		return (NULL);
 	while (1)
 	{
-		if (leftover || ft_strchr(leftover, '\n') == 1)  //? pour premier
+		if (!leftover || ft_strchr(leftover, '\n') == 1)  //? pour premier 
 			break ;
 		count = read(fd, buffer, BUFFER_SIZE);
 		if (count < 0 || (count == 0 && !leftover))
@@ -92,7 +92,7 @@ char	*get_next_line(int fd)
 	}
 	line = set_line(leftover);
 	leftover = set_left(leftover);
-	if (!line || !leftover)
+	if (!line || !leftover) // && ?
 		return (NULL);
 	return (line);
 }
